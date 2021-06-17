@@ -10,7 +10,7 @@ clone:
     dns: 223.5.5.5
 
 pipeline:
-  docker-amd64:
+  docker-builder-amd64:
     image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
     pull: true
     volumes:
@@ -28,7 +28,7 @@ pipeline:
       - source: REGISTRY_PASSWORD_ALIYUN
         target: REGISTRY_PASSWORD
 
-  docker-arm64:
+  docker-builder-arm64:
     image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
     pull: true
     volumes:
@@ -46,7 +46,7 @@ pipeline:
       - source: REGISTRY_PASSWORD_ALIYUN
         target: REGISTRY_PASSWORD
 
-  docker-ppc64le:
+  docker-builder-ppc64le:
     image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
     pull: true
     volumes:
@@ -64,8 +64,8 @@ pipeline:
       - source: REGISTRY_PASSWORD_ALIYUN
         target: REGISTRY_PASSWORD
 
-  docker-arch:
-    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker-manifest:v1.2.3
+  docker-builder-arch:
+    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker-builder-manifest:v1.2.3
     pull: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
