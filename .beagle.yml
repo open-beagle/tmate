@@ -8,6 +8,9 @@ clone:
   git:
     image: registry.cn-qingdao.aliyuncs.com/wod/devops-git:1.0
     dns: 223.5.5.5
+    when:
+      branch:
+        - dev
 
 pipeline:
   docker-builder-amd64:
@@ -27,6 +30,9 @@ pipeline:
         target: REGISTRY_USER
       - source: REGISTRY_PASSWORD_ALIYUN
         target: REGISTRY_PASSWORD
+    when:
+      branch:
+        - dev
 
   docker-builder-arm64:
     image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
@@ -45,6 +51,9 @@ pipeline:
         target: REGISTRY_USER
       - source: REGISTRY_PASSWORD_ALIYUN
         target: REGISTRY_PASSWORD
+    when:
+      branch:
+        - dev
 
   docker-builder-ppc64le:
     image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
@@ -63,20 +72,26 @@ pipeline:
         target: REGISTRY_USER
       - source: REGISTRY_PASSWORD_ALIYUN
         target: REGISTRY_PASSWORD
+    when:
+      branch:
+        - dev
 
   docker-builder-arch:
-    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker-builder-manifest:v1.2.3
+    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker-manifest:v1.2.3
     pull: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     platforms: linux/amd64,linux/arm64,linux/ppc64le
     template: registry.cn-qingdao.aliyuncs.com/wod/tmate-builder:alpine-3.13-ARCH
-    target: registry.cn-qingdao.aliyuncs.com/wod/tmate-builder:alpine-3.13-alpha
+    target: registry.cn-qingdao.aliyuncs.com/wod/tmate-builder:alpine-3.13
     secrets:
       - source: REGISTRY_USER_ALIYUN
         target: DOCKER_USERNAME
       - source: REGISTRY_PASSWORD_ALIYUN
         target: DOCKER_PASSWORD
+    when:
+      branch:
+        - dev
 
   builder-amd64:
     image: registry.cn-qingdao.aliyuncs.com/wod/tmate-builder:alpine-3.13-amd64
@@ -88,6 +103,9 @@ pipeline:
       - ./tmate -V
       - mkdir -p release/linux/amd64/
       - mv tmate release/linux/amd64/tmate
+    when:
+      branch:
+        - master
 
   builder-arm64:
     image: registry.cn-qingdao.aliyuncs.com/wod/tmate-builder:alpine-3.13-arm64
@@ -99,6 +117,9 @@ pipeline:
       - ./tmate -V
       - mkdir -p release/linux/arm64/
       - mv tmate release/linux/arm64/tmate
+    when:
+      branch:
+        - master
 
   builder-ppc64le:
     image: registry.cn-qingdao.aliyuncs.com/wod/tmate-builder:alpine-3.13-ppc64le
@@ -110,3 +131,86 @@ pipeline:
       - ./tmate -V
       - mkdir -p release/linux/ppc64le/
       - mv tmate release/linux/ppc64le/tmate
+    when:
+      branch:
+        - master
+
+  docker-amd64:
+    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
+    pull: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.13
+    dockerfile: .beagle/dockerfile
+    repo: wod/tmate
+    version: '2.4.0'
+    channel: amd64
+    args: 'TARGETOS=linux,TARGETARCH=amd64'
+    registry: registry.cn-qingdao.aliyuncs.com
+    secrets:
+      - source: REGISTRY_USER_ALIYUN
+        target: REGISTRY_USER
+      - source: REGISTRY_PASSWORD_ALIYUN
+        target: REGISTRY_PASSWORD
+    when:
+      branch:
+        - dev
+
+  docker-arm64:
+    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
+    pull: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.13-arm64
+    dockerfile: .beagle/dockerfile
+    repo: wod/tmate
+    version: '2.4.0'
+    channel: arm64
+    args: 'TARGETOS=linux,TARGETARCH=arm64'
+    registry: registry.cn-qingdao.aliyuncs.com
+    secrets:
+      - source: REGISTRY_USER_ALIYUN
+        target: REGISTRY_USER
+      - source: REGISTRY_PASSWORD_ALIYUN
+        target: REGISTRY_PASSWORD
+    when:
+      branch:
+        - dev
+
+  docker-ppc64le:
+    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
+    pull: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.13-ppc64le
+    dockerfile: .beagle/dockerfile
+    repo: wod/tmate
+    version: '2.4.0'
+    channel: ppc64le
+    args: 'TARGETOS=linux,TARGETARCH=ppc64le'
+    registry: registry.cn-qingdao.aliyuncs.com
+    secrets:
+      - source: REGISTRY_USER_ALIYUN
+        target: REGISTRY_USER
+      - source: REGISTRY_PASSWORD_ALIYUN
+        target: REGISTRY_PASSWORD
+    when:
+      branch:
+        - dev
+
+  docker-arch:
+    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker-manifest:v1.2.3
+    pull: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    platforms: linux/amd64,linux/arm64,linux/ppc64le
+    template: registry.cn-qingdao.aliyuncs.com/wod/tmate:2.4.0-ARCH
+    target: registry.cn-qingdao.aliyuncs.com/wod/tmate:2.4.0
+    secrets:
+      - source: REGISTRY_USER_ALIYUN
+        target: DOCKER_USERNAME
+      - source: REGISTRY_PASSWORD_ALIYUN
+        target: DOCKER_PASSWORD
+    when:
+      branch:
+        - dev

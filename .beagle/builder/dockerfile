@@ -10,7 +10,7 @@ LABEL maintainer=${AUTHOR} version=${VERSION}
 ARG TARGETOS
 ARG TARGETARCH
 
-RUN apk add --no-cache wget cmake make gcc g++ linux-headers zlib-dev openssl-dev \
+RUN apk update && apk add --no-cache wget cmake make gcc g++ linux-headers zlib-dev openssl-dev \
             automake autoconf libevent-dev ncurses-dev msgpack-c-dev libexecinfo-dev \
             ncurses-static libexecinfo-static libevent-static msgpack-c ncurses-libs \
             libevent libexecinfo openssl zlib
