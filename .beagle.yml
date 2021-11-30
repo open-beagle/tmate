@@ -6,7 +6,7 @@ trigger:
     - dev
 
 platform:
-  runner: 10.11.92.40
+  runner: 10.11.92.36
 
 workspace:
   path: github.com/tmate-io/tmate
@@ -98,7 +98,7 @@ trigger:
     - master
 
 platform:
-  runner: 10.11.92.40
+  runner: 10.11.92.36
 
 workspace:
   path: github.com/tmate-io/tmate
