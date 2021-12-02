@@ -122,6 +122,7 @@ steps:
   - name: builder-arm64
     image: registry.cn-qingdao.aliyuncs.com/wod-arm/tmate-builder:alpine-3.10-arm64
     commands:
+      - make clean
       - ./autogen.sh && ./configure --enable-static
       - make -j $(nproc)
       - objcopy --only-keep-debug tmate tmate.symbols && strip tmate
@@ -132,6 +133,7 @@ steps:
   - name: builder-ppc64le
     image: registry.cn-qingdao.aliyuncs.com/wod-arm/tmate-builder:alpine-3.10-ppc64le
     commands:
+      - make clean
       - ./autogen.sh && ./configure --enable-static
       - make -j $(nproc)
       - objcopy --only-keep-debug tmate tmate.symbols && strip tmate
