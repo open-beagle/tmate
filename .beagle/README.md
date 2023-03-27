@@ -15,7 +15,7 @@ git merge 2.4.0
 docker run -it --rm \
 -v $PWD/:/go/src/github.com/tmate-io/tmate \
 -w /go/src/github.com/tmate-io/tmate \
-registry.cn-qingdao.aliyuncs.com/wod-arm/tmate-builder:alpine-3.10-arm64 \
+registry.cn-qingdao.aliyuncs.com/wod/tmate:builder-alpine-3.11-arm64 \
 ash -c '
 ./autogen.sh && ./configure --enable-static && \
 make clean && \
@@ -30,7 +30,7 @@ mv tmate release/linux/amd64/tmate
 docker run -it --rm \
 -v $PWD/:/go/src/github.com/tmate-io/tmate \
 -w /go/src/github.com/tmate-io/tmate \
-registry.cn-qingdao.aliyuncs.com/wod-arm/tmate-builder:alpine-3.11-mips64le \
+registry.cn-qingdao.aliyuncs.com/wod/tmate:builder-alpine-3.11-mips64le \
 ash -c '
 ./autogen.sh && ./configure --enable-static && \
 make -j $(nproc) && \
@@ -42,7 +42,7 @@ mv tmate release/linux/amd64/tmate
 
 # arm64
 docker build \
-  --build-arg BASE=registry.cn-qingdao.aliyuncs.com/wod/alpine:3.10-arm64 \
+  --build-arg BASE=registry.cn-qingdao.aliyuncs.com/wod/alpine:3.11-arm64 \
   --build-arg AUTHOR=mengkzhaoyun \
   --build-arg VERSION=2.4.0 \
   --build-arg TARGETARCH=amd64 \
@@ -53,7 +53,7 @@ docker push registry.cn-qingdao.aliyuncs.com/wod/tmate:2.4.0-arm64
 
 # mips64le
 docker build \
-  --build-arg BASE=loongnix/alpine:3.9 \
+  --build-arg BASE=registry.cn-qingdao.aliyuncs.com/wod/alpine:3.11-mips64le \
   --build-arg AUTHOR=mengkzhaoyun \
   --build-arg VERSION=2.4.0 \
   --build-arg TARGETARCH=amd64 \
