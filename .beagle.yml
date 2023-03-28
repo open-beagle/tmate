@@ -38,10 +38,10 @@ steps:
       - name: docker
         path: /var/run/docker.sock
     settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.11-amd64
+      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.10-amd64
       dockerfile: .beagle/builder/dockerfile
       repo: wod/tmate
-      version: builder-alpine-3.11
+      version: builder-alpine-3.10
       channel: amd64
       args: 'TARGETOS=linux,TARGETARCH=amd64'
       registry: registry.cn-qingdao.aliyuncs.com
@@ -56,10 +56,10 @@ steps:
       - name: docker
         path: /var/run/docker.sock
     settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.11-arm64
+      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.10-arm64
       dockerfile: .beagle/builder/dockerfile
       repo: wod/tmate
-      version: builder-alpine-3.11
+      version: builder-alpine-3.10
       channel: arm64
       args: 'TARGETOS=linux,TARGETARCH=arm64'
       registry: registry.cn-qingdao.aliyuncs.com
@@ -74,10 +74,10 @@ steps:
       - name: docker
         path: /var/run/docker.sock
     settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.11-ppc64le
+      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.10-ppc64le
       dockerfile: .beagle/builder/dockerfile
       repo: wod/tmate
-      version: builder-alpine-3.11
+      version: builder-alpine-3.10
       channel: ppc64le
       args: 'TARGETOS=linux,TARGETARCH=ppc64le'
       registry: registry.cn-qingdao.aliyuncs.com
@@ -119,7 +119,7 @@ volumes:
 
 steps:
   - name: builder-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/tmate:builder-alpine-3.11-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/tmate:builder-alpine-3.10-amd64
     commands:
       - ./autogen.sh && ./configure --enable-static
       - make -j $(nproc)
@@ -129,7 +129,7 @@ steps:
       - mv tmate release/linux/amd64/tmate
 
   - name: builder-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/tmate:builder-alpine-3.11-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/tmate:builder-alpine-3.10-arm64
     commands:
       - make clean
       - ./autogen.sh && ./configure --enable-static
@@ -140,7 +140,7 @@ steps:
       - mv tmate release/linux/arm64/tmate
 
   - name: builder-ppc64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/tmate:builder-alpine-3.11-ppc64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/tmate:builder-alpine-3.10-ppc64le
     commands:
       - make clean
       - ./autogen.sh && ./configure --enable-static
@@ -166,7 +166,7 @@ steps:
       - name: docker
         path: /var/run/docker.sock
     settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.11-amd64
+      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.10-amd64
       dockerfile: .beagle/dockerfile
       repo: wod/tmate
       version: 2.4.0
@@ -184,7 +184,7 @@ steps:
       - name: docker
         path: /var/run/docker.sock
     settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.11-arm64
+      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.10-arm64
       dockerfile: .beagle/dockerfile
       repo: wod/tmate
       version: 2.4.0
@@ -202,7 +202,7 @@ steps:
       - name: docker
         path: /var/run/docker.sock
     settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.11-ppc64le
+      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.10-ppc64le
       dockerfile: .beagle/dockerfile
       repo: wod/tmate
       version: 2.4.0
@@ -220,7 +220,7 @@ steps:
       - name: docker
         path: /var/run/docker.sock
     settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.11-mips64le
+      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.10-mips64le
       dockerfile: .beagle/dockerfile
       repo: wod/tmate
       version: 2.4.0
