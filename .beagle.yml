@@ -92,10 +92,10 @@ steps:
       - name: docker
         path: /var/run/docker.sock
     settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.11-mips64le
-      dockerfile: .beagle/builder/dockerfile
+      base: registry.cn-qingdao.aliyuncs.com/wod/debian:bullseye-mips64le
+      dockerfile: .beagle/builder/debian.dockerfile
       repo: wod/tmate
-      version: builder-alpine-3.11
+      version: builder-debian-bullseye
       channel: mips64le
       args: 'TARGETOS=linux,TARGETARCH=mips64le'
       registry: registry.cn-qingdao.aliyuncs.com
@@ -151,11 +151,10 @@ steps:
       - mv tmate release/linux/ppc64le/tmate
 
   - name: builder-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/tmate:builder-alpine-3.11-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/tmate:builder-debian-bullseye-mips64le
     commands:
-      - ./autogen.sh && ./configure --enable-static
-      - make -j $(nproc)
-      - objcopy --only-keep-debug tmate tmate.symbols && strip tmate
+      - ./autogen.sh && ./configure
+      - make install
       - ./tmate -V
       - mkdir -p release/linux/mips64le/
       - mv tmate release/linux/mips64le/tmate
@@ -220,7 +219,7 @@ steps:
       - name: docker
         path: /var/run/docker.sock
     settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.10-mips64le
+      base: registry.cn-qingdao.aliyuncs.com/wod/debian:bullseye
       dockerfile: .beagle/dockerfile
       repo: wod/tmate
       version: 2.4.0

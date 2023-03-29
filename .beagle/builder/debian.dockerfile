@@ -10,10 +10,18 @@ LABEL maintainer=${AUTHOR} version=${VERSION}
 ARG TARGETOS
 ARG TARGETARCH
 
-RUN apt update -y && apt install -y wget cmake make gcc g++ lib32z1-dev \
-            automake autoconf libevent-dev ncurses-dev libmsgpack-dev libexecs-dev \
-            ncurses-static libexecinfo-static libevent-static msgpack-c ncurses-libs \
-            libevent libexecs openssl lib32z1
+RUN apt update -y && \
+apt-get install -y \
+build-essential \
+automake \
+libtool \
+libevent-dev \
+libncurses5-dev \
+libmsgpack-dev \
+libssh-dev \
+pkg-config \
+wget \
+cmake
 
 RUN set -ex; \
             mkdir -p /src/libssh/build; \
