@@ -22,4 +22,15 @@ docker build \
   --file .beagle/builder/debian.dockerfile .beagle/builder/
 
 docker push registry.cn-qingdao.aliyuncs.com/wod/tmate:builder-debian-bullseye-mips64le
+
+# debian-loong64
+docker build \
+  --build-arg BASE=cr.loongnix.cn/library/debian:buster \
+  --build-arg AUTHOR=mengkzhaoyun \
+  --build-arg VERSION=builder-debian-bullseye \
+  --build-arg TARGETARCH=mips64le \
+  --tag registry.cn-qingdao.aliyuncs.com/wod/tmate:builder-debian-buster-loong64 \
+  --file .beagle/builder/debian.dockerfile .beagle/builder/
+
+docker push registry.cn-qingdao.aliyuncs.com/wod/tmate:builder-debian-buster-loong64
 ```

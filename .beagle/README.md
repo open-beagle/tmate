@@ -77,4 +77,34 @@ make install && \
 mkdir -p release/linux/mips64le/ && \
 mv tmate release/linux/mips64le/tmate
 '
+
+# builder-loong64
+docker run -it --rm \
+-v $PWD/:/go/src/github.com/tmate-io/tmate \
+-w /go/src/github.com/tmate-io/tmate \
+cr.loongnix.cn/library/debian:buster \
+bash
+
+docker run -it --rm \
+-v $PWD/:/go/src/github.com/tmate-io/tmate \
+-w /go/src/github.com/tmate-io/tmate \
+registry.cn-qingdao.aliyuncs.com/wod/tmate:builder-debian-buster-loong64 \
+bash -c '
+./autogen.sh && 
+./configure && \
+make install && \
+mkdir -p release/linux/loong64/ && \
+mv tmate release/linux/loong64/tmate
+'
+
+docker build \
+  --build-arg BASE=registry.cn-qingdao.aliyuncs.com/wod/alpine:3-loong64 \
+  --build-arg AUTHOR=mengkzhaoyun \
+  --build-arg VERSION=2.4.0 \
+  --build-arg TARGETOS=linux \
+  --build-arg TARGETARCH=loong64 \
+  --tag registry.cn-qingdao.aliyuncs.com/wod/tmate:2.4.0-loong64 \
+  --file .beagle/dockerfile ./
+
+docker push registry.cn-qingdao.aliyuncs.com/wod/tmate:2.4.0-loong64
 ```

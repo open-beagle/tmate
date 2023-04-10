@@ -165,7 +165,7 @@ steps:
       - name: docker
         path: /var/run/docker.sock
     settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.10-amd64
+      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3-amd64
       dockerfile: .beagle/dockerfile
       repo: wod/tmate
       version: 2.4.0
@@ -183,7 +183,7 @@ steps:
       - name: docker
         path: /var/run/docker.sock
     settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.10-arm64
+      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3-arm64
       dockerfile: .beagle/dockerfile
       repo: wod/tmate
       version: 2.4.0
@@ -201,7 +201,7 @@ steps:
       - name: docker
         path: /var/run/docker.sock
     settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.10-ppc64le
+      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3-ppc64le
       dockerfile: .beagle/dockerfile
       repo: wod/tmate
       version: 2.4.0
@@ -219,7 +219,7 @@ steps:
       - name: docker
         path: /var/run/docker.sock
     settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/debian:bullseye
+      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3-mips64le
       dockerfile: .beagle/dockerfile
       repo: wod/tmate
       version: 2.4.0
@@ -229,17 +229,6 @@ steps:
       registry_user:
         from_secret: REGISTRY_USER_ALIYUN
       registry_password:
-        from_secret: REGISTRY_PASSWORD_ALIYUN
-
-  - name: docker-arch
-    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker-manifest:1.0
-    settings:
-      platforms: linux/amd64,linux/arm64,linux/ppc64le,linux/mips64le
-      template: registry.cn-qingdao.aliyuncs.com/wod/tmate:2.4.0-ARCH
-      target: registry.cn-qingdao.aliyuncs.com/wod/tmate:2.4.0
-      username:
-        from_secret: REGISTRY_USER_ALIYUN
-      password:
         from_secret: REGISTRY_PASSWORD_ALIYUN
 
 ---
