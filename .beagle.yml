@@ -43,7 +43,7 @@ steps:
       repo: wod/tmate
       version: builder-alpine-3.10
       channel: amd64
-      args: 'TARGETOS=linux,TARGETARCH=amd64'
+      args: "TARGETOS=linux,TARGETARCH=amd64"
       registry: registry.cn-qingdao.aliyuncs.com
       registry_user:
         from_secret: REGISTRY_USER_ALIYUN
@@ -61,43 +61,7 @@ steps:
       repo: wod/tmate
       version: builder-alpine-3.10
       channel: arm64
-      args: 'TARGETOS=linux,TARGETARCH=arm64'
-      registry: registry.cn-qingdao.aliyuncs.com
-      registry_user:
-        from_secret: REGISTRY_USER_ALIYUN
-      registry_password:
-        from_secret: REGISTRY_PASSWORD_ALIYUN
-
-  - name: docker-builder-ppc64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-    settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.10-ppc64le
-      dockerfile: .beagle/builder/dockerfile
-      repo: wod/tmate
-      version: builder-alpine-3.10
-      channel: ppc64le
-      args: 'TARGETOS=linux,TARGETARCH=ppc64le'
-      registry: registry.cn-qingdao.aliyuncs.com
-      registry_user:
-        from_secret: REGISTRY_USER_ALIYUN
-      registry_password:
-        from_secret: REGISTRY_PASSWORD_ALIYUN
-
-  - name: docker-builder-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-    settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/debian:bullseye-mips64le
-      dockerfile: .beagle/builder/debian.dockerfile
-      repo: wod/tmate
-      version: builder-debian-bullseye
-      channel: mips64le
-      args: 'TARGETOS=linux,TARGETARCH=mips64le'
+      args: "TARGETOS=linux,TARGETARCH=arm64"
       registry: registry.cn-qingdao.aliyuncs.com
       registry_user:
         from_secret: REGISTRY_USER_ALIYUN
@@ -139,26 +103,6 @@ steps:
       - mkdir -p release/linux/arm64/
       - mv tmate release/linux/arm64/tmate
 
-  - name: builder-ppc64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/tmate:builder-alpine-3.10-ppc64le
-    commands:
-      - make clean
-      - ./autogen.sh && ./configure --enable-static
-      - make -j $(nproc)
-      - objcopy --only-keep-debug tmate tmate.symbols && strip tmate
-      - ./tmate -V
-      - mkdir -p release/linux/ppc64le/
-      - mv tmate release/linux/ppc64le/tmate
-
-  - name: builder-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/tmate:builder-debian-bullseye-mips64le
-    commands:
-      - ./autogen.sh && ./configure
-      - make install
-      - ./tmate -V
-      - mkdir -p release/linux/mips64le/
-      - mv tmate release/linux/mips64le/tmate
-
   - name: docker-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
     volumes:
@@ -170,7 +114,7 @@ steps:
       repo: wod/tmate
       version: 2.4.0
       channel: amd64
-      args: 'TARGETOS=linux,TARGETARCH=amd64'
+      args: "TARGETOS=linux,TARGETARCH=amd64"
       registry: registry.cn-qingdao.aliyuncs.com
       registry_user:
         from_secret: REGISTRY_USER_ALIYUN
@@ -188,43 +132,7 @@ steps:
       repo: wod/tmate
       version: 2.4.0
       channel: arm64
-      args: 'TARGETOS=linux,TARGETARCH=arm64'
-      registry: registry.cn-qingdao.aliyuncs.com
-      registry_user:
-        from_secret: REGISTRY_USER_ALIYUN
-      registry_password:
-        from_secret: REGISTRY_PASSWORD_ALIYUN
-
-  - name: docker-ppc64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-    settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3-ppc64le
-      dockerfile: .beagle/dockerfile
-      repo: wod/tmate
-      version: 2.4.0
-      channel: ppc64le
-      args: 'TARGETOS=linux,TARGETARCH=ppc64le'
-      registry: registry.cn-qingdao.aliyuncs.com
-      registry_user:
-        from_secret: REGISTRY_USER_ALIYUN
-      registry_password:
-        from_secret: REGISTRY_PASSWORD_ALIYUN
-
-  - name: docker-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-    settings:
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3-mips64le
-      dockerfile: .beagle/dockerfile
-      repo: wod/tmate
-      version: 2.4.0
-      channel: mips64le
-      args: 'TARGETOS=linux,TARGETARCH=mips64le'
+      args: "TARGETOS=linux,TARGETARCH=arm64"
       registry: registry.cn-qingdao.aliyuncs.com
       registry_user:
         from_secret: REGISTRY_USER_ALIYUN

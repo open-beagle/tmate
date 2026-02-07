@@ -1,5 +1,4 @@
-ARG PLATFORM=amd64
-FROM ${PLATFORM}/alpine:3.10 AS build
+FROM alpine:3 AS build
 
 WORKDIR /build
 
@@ -28,7 +27,7 @@ RUN make -j $(nproc)
 RUN objcopy --only-keep-debug tmate tmate.symbols && chmod -x tmate.symbols && strip tmate
 RUN ./tmate -V
 
-FROM alpine:3.9
+FROM alpine:3
 
 RUN apk --no-cache add bash
 RUN mkdir /build
