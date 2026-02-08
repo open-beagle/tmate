@@ -14,6 +14,7 @@ RUN set -ex; \
             tar -xf libssh.tar.xz -C /src/libssh --strip-components=1; \
             cd /src/libssh/build; \
             cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr \
+            -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
             -DWITH_SFTP=OFF -DWITH_SERVER=OFF -DWITH_PCAP=OFF \
             -DWITH_STATIC_LIB=ON -DWITH_GSSAPI=OFF ..; \
             make -j $(nproc); \
