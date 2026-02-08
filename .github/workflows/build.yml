@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: Dockerfile
+          file: .beagle/dockerfile
           platforms: ${{ matrix.platform }}
           push: true
           tags: |
