@@ -45,6 +45,8 @@ jobs:
           file: .beagle/dockerfile
           platforms: ${{ matrix.platform }}
           push: true
+          build-args: |
+            BASE=registry.cn-qingdao.aliyuncs.com/wod/alpine:3
           tags: |
             registry.cn-qingdao.aliyuncs.com/wod/tmate:${{ env.BUILD_VERSION }}-${{ matrix.arch }}
 
